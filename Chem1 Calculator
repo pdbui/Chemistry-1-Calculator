@@ -1,0 +1,309 @@
+import random, sys, os, time
+
+#constants
+c = 3*(10**8)
+h = 6.63*(10**(-34))
+Rh = 2.18*(10**(-18))
+Ms = '-1/2, 1/2'
+aml = 0
+
+#Variables
+answer = None
+unit = None
+
+#Boleans
+correctInput = False
+repeatCalc = True
+
+#menu choices
+introchoice = ['1.Solutions & Molarity', '2.Property of Waves', '3.Electromagnetic Radiation', '4.Plank\'s Quantum Theory', 
+'5.Bohr\'s Energy Levels', '6.De Broglie\'s Theory', '7.Schrodinger Wave Equation']
+choice1 = ['1.Dilution', '2.Acid Base Titration']
+
+#Equations for problems
+
+#Equation for Solutions and Molarity
+def dilution():
+
+    #Globalizing variables for changes
+    global answer, unit, correctInput
+
+    while correctInput == False:
+        print('Only enter in values that you have.')
+        print('Leave the value you are trying to find empty and simply press Enter.')
+        print('(You should only have one blank.')
+        print('')
+        mi = input('Enter in the Initial Molarity: ')
+        vi = input('Enter in the Initial Volume: ')
+        mf = input('Enter in the Final Molarity: ')
+        vf = input('Enter in the Final Volume: ')
+  
+        if mi == '' and vi != '' and mf != '' and vf != '':
+            unit = 'M'
+            answer = float(mf)*float(vf)/float(vi)
+            correctInput = True
+        elif vi == '' and mi != '' and mf != '' and vf != '':
+            unit = 'L'
+            answer = float(mf)*float(vf)/float(mi)
+            correctInput = True
+        elif mf == '' and vi != '' and mi != '' and vf != '':
+            unit = 'M'
+            answer = float(mi)*float(vi)/float(vf)
+            correctInput = True
+        elif vf == '' and vi != '' and mf != '' and mi != '':
+            unit = 'L'
+            answer = float(mi)*float(vi)/float(mf)
+            correctInput = True
+        else:
+            print('There was an error. Please try again.')
+    print('')
+    print('Your answer is '+str(answer)+' '+str(unit))
+
+def titration():
+    global answer, unit, correctInput
+
+    while correctInput == False:
+        print('Only enter in values that you have.')
+        print('Leave the value you are trying to find empty and simply press Enter.')
+        print('(You should only have one blank. Coefficient 1 and 2 are from the balanced chemical equation.)')
+        print('Make sure the chemical equation is balanced and volumes are in Liters!')
+        print('')
+        s1m = input('Enter in Substance 1 Molarity: ')
+        s1v = input('Enter in Substance 1 Volume: ')
+        coeff1 = input('Enter in Substance 1 Coefficient: ')
+        s2m = input('Enter in Substance 2 Molarity: ')
+        s2v = input('Enter in Substance 2 Volume: ')
+        coeff2 = input('Enter in Substance 2 Coefficient: ')
+
+        if s1m == '' and s1v != '' and coeff1 != '' and s2m != '' and s2v != '' and coeff2 != '':
+            unit = 'M'
+            answer = (float(s2m)*float(s2v)*(float(coeff1)/float(coeff2))/float(s1v))
+            correctInput = True
+        elif s1m != '' and s1v == '' and coeff1 != '' and s2m != '' and s2v != '' and coeff2 != '':
+            unit = 'L'
+            answer = (float(s2m)*float(s2v)*(float(coeff1)/float(coeff2))/float(s1m))
+            correctInput = True
+        elif s1m != '' and s1v != '' and coeff1 != '' and s2m == '' and s2v != '' and coeff2 != '':
+            unit = 'M'
+            answer = (float(s1m)*float(s1v)*(float(coeff2)/float(coeff1))/float(s2v))
+            correctInput = True
+        elif s1m != '' and s1v != '' and coeff1 != '' and s2m != '' and s2v == '' and coeff2 != '':
+            unit = 'L'
+            answer = (float(s1m)*float(s1v)*(float(coeff2)/float(coeff1))/float(s2m))
+            correctInput = True
+        else:
+            print('There was an error. Please try again.')
+            print('')
+    print('')  
+    print('Your answer is '+str(answer)+' '+str(unit))
+
+#Equation for Electromagnetic radiation
+def electroMag():
+    global answer, unit, correctInput
+
+    while correctInput == False:
+        print('Only enter in values that you have.')
+        print('Leave the value you are trying to find empty and simply press Enter.')
+        print("Make sure wavelengths, if given, are in meters!")
+        print('')
+        y = input('Enter in Wavelength (meters): ')
+        v = input("Enter in Frequency: ")
+        
+        if y == '' and v != '':
+            unit = 'm'
+            answer = float(c)/float(v)
+            correctInput = True
+        elif y != '' and v == '':
+            unit = 'Hz'
+            answer = float(c)/float(y)
+            correctInput = True
+        else:
+            print('There was an error. Please try again.')
+            print('')
+    print('')
+    print('Your answer is ' + str(answer) + ' ' + str(unit))
+
+#Equation for Properties of Waves
+def propWave():
+    global answer, unit, correctInput
+
+    while correctInput == False:
+        print('Only enter in values that you have.')
+        print('Leave the value you are trying to find empty and simply press Enter.')
+        print("Make sure wavelengths, if given, are in meters!")
+        print('')
+        y = input('Enter in Wavelength (meters): ')
+        v = input("Enter in Frequency: ")
+        u = input('Enter in Velocity: ')
+
+        if y == '' and v != '' and u != '':
+            unit = 'm'
+            answer = float(u)/float(v)
+            correctInput = True
+        elif y != '' and v == '' and u != '':
+            unit = 'Hz'
+            answer = float(u)/float(y)
+            correctInput = True
+        elif y != '' and v != '' and u == '':
+            unit = 'm/s'
+            answer = float(y)*float(v)
+            correctInput = True
+        else:
+            print('There was an error. Please try again.')
+            print('')
+    print('')
+    print('Your answer is ' + str(answer) + ' ' + str(unit))
+
+#Equation for Plank's Quantum Theory
+def plankQT():
+    global answer, unit, correctInput
+    while correctInput == False:
+        print('Only enter in values that you have.')
+        print('Leave the values that you don\'t have empty and simply press Enter.')
+        print("Make sure wavelengths, if given, are in meters!")
+        print('')
+        E = input('Enter in Energy: ')
+        v = input('Enter in Frequency: ')
+        y = input('Enter in wavelength: ')
+
+        if E == '' and v == '' and y != '':
+            unit = 'Joules'
+            answer = h*(c/float(y))
+            correctInput = True
+        elif E == '' and v != '' and y == '':
+            unit = 'Joules'
+            answer = float(h)*float(v)
+            correctInput = True
+        elif E != '' and v == '' and y == '':
+            print('')
+            print('Are you trying to find 1.Frequency or 2.Wavelength?')
+            pchoice = input('Choice: ')
+            if pchoice == '1':
+                unit = 'Hz'
+                answer = float(E)/float(h)
+            else:
+                unit = 'm'
+                answer = float(c)*(float(E)/float(h))
+            
+            correctInput = True
+        else:
+            print('There was an error. Please try again.')
+            print('')
+    print('')
+    print('Your answer is ' + str(answer) + ' ' + str(unit))
+
+#Bohr's Energy Level
+def bohrEL():
+    global answer, unit, correctInput
+    while correctInput == False:
+        e1 = input('Enter in the Initial Energy Level: ')
+        e2 = input('Enter in the Final Energy Level: ')
+        unit = 'Joules'
+        answer = Rh*((1/(float(e1)**2))-(1/(float(e2)**2)))
+        correctInput = True
+    print('')
+    print('Your answer is ' + str(answer) + ' ' + str(unit))
+
+#De Broglie's Theory
+def deBrog():
+    global answer, unit, correctInput
+    while correctInput == False:
+        print('Make sure Wavelength is in meters and Mass is in kilograms if they are given!')
+        y = input('Enter in Wavelength: ')
+        u = input('Enter in Velocity: ')
+        m = input('Enter in Mass: ')
+
+        if y == '' and u != '' and m != '':
+            unit = 'm'
+            answer = h/(float(m)*float(u))
+            correctInput = True
+        elif y != '' and u == '' and m != '':
+            unit = 'm/s'
+            answer = (h/float(y))/float(m)
+            correctInput = True
+        elif y != '' and u != '' and m == '':
+            unit = 'kg'
+            answer = (h/float(y))/float(u)
+            correctInput = True
+        else:
+            print('Incorrect input. Please try again.')
+            input('Pres any key to continue... ')
+    print('')
+    print('Your answer is ' + str(answer) + ' ' + str(unit))
+
+#Schrodinger's Wave Equation
+def schrodWave():
+    global answer, unit, correctInput
+    while correctInput == False:
+        print('Enter the Quantum Number n and Angular Momentum Quantum Number l for the LAST orbital.')
+        print('Example) For 4p^6, enter 4 for n and 1 for l. s = 0, p = 1, d = 2, f = 3', end = '\n\n')
+        n = input('Enter in Quantum Number (n): ')
+        l = input('Enter in Angular Momentum Quantum Number (l): ')
+
+        if l == 's':
+            aml = 0
+        elif l == 'p':
+            aml = -1, 0, 1
+        elif l == 'd':
+            aml = -2, -1, 0, 1, 2
+        elif l == 'f':
+            aml = -3, -2, -1, 0, 1, 2, 3
+     
+        correctInput = True
+    print('')
+    print('Your answers are...')
+    print('n = '+n)
+    print('l = '+l)
+    print('Mi = '+str(aml))
+    print('Ms = '+str(Ms))
+    
+#INITIALIZATION, THE START OF THE CALCULATOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+print('~CHEMISTRY 1 CALCULATOR 2017~   v0.0.1', end = '\n\n''By Peter Bui')
+print('\n')
+while repeatCalc:
+    print('Pick a topic by entering its corresponding number.', end = '\n\n')
+    print(*introchoice, sep='\n', end = '\n\n')
+    pick = input('Choice: ')
+    print('')
+
+    if pick == '1':
+        print(*choice1, sep='\n', end = '\n\n')
+        pick1 = input('Choice: ')
+        print('')
+        if pick1 == '1':
+            dilution()
+        elif pick1 == '2':
+            titration()
+        else:
+            print('There was an error. Please try again.')
+            
+    elif pick == '2':
+        propWave()
+    elif pick == '3':
+        electroMag()  
+    elif pick == '4':
+        plankQT()  
+    elif pick == '5':
+        bohrEL()
+    elif pick == '6':
+        deBrog()
+    elif pick == '7':
+        schrodWave()
+    else:
+        print('Incorrect input. Please try again.')
+        input('Press Enter to continue...')
+        
+    print('')
+    print('Would you like to do another calculation?')
+    repeat = input('[y/n]: ')
+    if repeat == 'y':
+        print('')
+    elif repeat == 'n':
+        print('')
+        print('Goodbye.')
+        repeatCalc = False
+    else:
+        print('Incorrect input. Calculator will restart.')
+        input('Press any key to continue...')
+        print('')
+    correctInput = False
